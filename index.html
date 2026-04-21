@@ -11,26 +11,54 @@
         <div class="sidebar">
             <h2>Navigation</h2>
             <ul>
-                <li><a href="#" data-page="dashboard">Dashboard</a></li>
-                <li><a href="#" data-page="transactions">Transactions</a></li>
-                <li><a href="#" data-page="saving-goals">Saving Goals</a></li>
+                <li><a href="#" data-page="dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#" data-page="details" class="nav-link">Details</a></li>
             </ul>
         </div>
         <div class="main">
             <div id="dashboard" class="page active">
                 <h1>Dashboard</h1>
-                <p>Welcome to your family budget manager.</p>
-                <!-- Add dashboard content here -->
+                <div class="block chart-block">
+                    <h2>Budget Overview</h2>
+                    <div class="semicircle-container">
+                        <div class="semicircle">
+                            <div class="progress" id="progressCircle"></div>
+                        </div>
+                        <div class="chart-stats">
+                            <p><strong>Total Budget:</strong> 2000 zł</p>
+                            <p><strong>Expenses:</strong> <span id="expensesAmount"></span> zł (<span id="expensesPercent"></span>%)</p>
+                            <p><strong>Savings:</strong> <span id="savingsAmount"></span> zł (<span id="savingsPercent"></span>%)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="block income-block">
+                    <h2>Recent Income</h2>
+                    <ul>
+                        <li>Salary: 3000 zł on 2023-04-01</li>
+                        <li>Freelance: 500 zł on 2023-04-15</li>
+                    </ul>
+                </div>
+                <div class="block spending-block">
+                    <h2>Recent Spendings</h2>
+                    <ul>
+                        <li>Groceries: 200 zł on 2023-04-02</li>
+                        <li>Rent: 1000 zł on 2023-04-01</li>
+                        <li>Utilities: 150 zł on 2023-04-10</li>
+                    </ul>
+                </div>
             </div>
-            <div id="transactions" class="page">
-                <h1>Transactions</h1>
-                <p>Manage your transactions here.</p>
-                <!-- Empty for now -->
-            </div>
-            <div id="saving-goals" class="page">
-                <h1>Saving Goals</h1>
-                <p>Set and track your saving goals.</p>
-                <!-- Empty for now -->
+            <div id="details" class="page">
+                <h1>Details</h1>
+                <div class="details-container">
+                    <div id="transactions" class="detail-section">
+                        <h2>Transactions</h2>
+                        <p>Manage your transactions here.</p>
+                    </div>
+                    <div id="saving-goals" class="detail-section">
+                        <h2>Saving Goals</h2>
+                        <p>Set and track your saving goals.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
