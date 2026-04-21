@@ -9,7 +9,7 @@ require_once __DIR__ . '/../db.php';
  * Format currency amount with symbol
  */
 function format_currency($amount) {
-    return CURRENCY_SYMBOL . number_format($amount, 2);
+    return CURRENCY_SYMBOL . number_format((float)$amount, 2, '.', ',');
 }
 
 /**
