@@ -32,6 +32,7 @@ if ($page_title == 'Index') $page_title = 'Dashboard';
         </div>
         <nav class="side-nav">
             <a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Dashboard</a>
+            <a href="start_of_month.php" class="<?= $current_page == 'start_of_month.php' ? 'active' : '' ?>">Start of Month</a>
             <a href="transactions.php" class="<?= $current_page == 'transactions.php' ? 'active' : '' ?>">Transactions</a>
             <a href="savings.php" class="<?= $current_page == 'savings.php' ? 'active' : '' ?>">Savings & Goals</a>
             <?php if ($_SESSION['role'] === 'parent'): ?>

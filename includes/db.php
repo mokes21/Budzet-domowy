@@ -12,3 +12,18 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
+
+// Ensure budgets table exists (Auto-migration for new feature)
+$pdo->exec("
+    CREATE TABLE IF NOT EXISTS budgets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        amount REAL DEFAULT 0,
+        for_child INTEGER DEFAULT 0
+    )
+");
+
+// Initialize budget rows if missing
+$stmt = $pdo->query("SELECT COUNT(*) FROM budgets");
+if ($stmt->fetchColumn() == 0) {
+    $pdo->exec("INSERT INTO budgets (amount, for_child) VALUES (0, 0), (0, 1)");
+}

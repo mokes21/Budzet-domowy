@@ -9,7 +9,10 @@ $goals_filter = $is_child ? " WHERE for_child = 1" : "";
 $savings_filter = $is_child ? " WHERE for_child = 1" : "";
 
 // Calculate totals
-$total_income = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' $and_child_filter")->fetchColumn() ?: 0;
+$monthly_budget = $pdo->query("SELECT amount FROM budgets WHERE for_child = " . ($is_child ? 1 : 0))->fetchColumn() ?: 0;
+$adhoc_income = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' $and_child_filter")->fetchColumn() ?: 0;
+$total_income = $monthly_budget + $adhoc_income;
+
 $total_expense = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' $and_child_filter")->fetchColumn() ?: 0;
 
 // Important expenses
@@ -28,7 +31,9 @@ $recent_expenses = $pdo->query("SELECT * FROM transactions WHERE type='expense' 
 
 // Child stats (for parent) or Monthly stats (for child)
 if (!$is_child) {
-    $child_inc = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' AND by_child=1")->fetchColumn() ?: 0;
+    $c_b = $pdo->query("SELECT amount FROM budgets WHERE for_child=1")->fetchColumn() ?: 0;
+    $c_inc = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' AND by_child=1")->fetchColumn() ?: 0;
+    $child_inc = $c_b + $c_inc;
     $child_exp = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' AND by_child=1")->fetchColumn() ?: 0;
     $child_sv = $pdo->query("SELECT SUM(amount) FROM savings WHERE for_child=1")->fetchColumn() ?: 0;
     $child_gl = $pdo->query("SELECT SUM(current_amount) FROM goals WHERE for_child=1")->fetchColumn() ?: 0;
@@ -36,7 +41,9 @@ if (!$is_child) {
 } else {
     // Current month stats
     $current_month = date('Y-m');
-    $month_inc = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' AND by_child=1 AND date LIKE '$current_month%'")->fetchColumn() ?: 0;
+    $c_b = $pdo->query("SELECT amount FROM budgets WHERE for_child=1")->fetchColumn() ?: 0;
+    $month_inc_tx = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='income' AND by_child=1 AND date LIKE '$current_month%'")->fetchColumn() ?: 0;
+    $month_inc = $c_b + $month_inc_tx;
     $month_exp = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' AND by_child=1 AND date LIKE '$current_month%'")->fetchColumn() ?: 0;
 }
 ?>
