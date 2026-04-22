@@ -3,10 +3,11 @@
 require_once 'includes/header.php';
 
 $is_child = $_SESSION['role'] === 'child';
-$child_filter = $is_child ? " WHERE by_child = 1" : "";
-$and_child_filter = $is_child ? " AND by_child = 1" : "";
-$goals_filter = $is_child ? " WHERE for_child = 1" : "";
-$savings_filter = $is_child ? " WHERE for_child = 1" : "";
+$by_child_val = $is_child ? 1 : 0;
+$child_filter = " WHERE by_child = $by_child_val";
+$and_child_filter = " AND by_child = $by_child_val";
+$goals_filter = " WHERE for_child = $by_child_val";
+$savings_filter = " WHERE for_child = $by_child_val";
 
 // Calculate totals
 $monthly_budget = $pdo->query("SELECT amount FROM budgets WHERE for_child = " . ($is_child ? 1 : 0))->fetchColumn() ?: 0;
@@ -16,7 +17,7 @@ $total_income = $monthly_budget + $adhoc_income;
 $total_expense = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' $and_child_filter")->fetchColumn() ?: 0;
 
 // Important expenses
-$important_expenses = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' AND category IN ('food', 'books', 'bus passes', 'bus_passes') $and_child_filter")->fetchColumn() ?: 0;
+$important_expenses = $pdo->query("SELECT SUM(amount) FROM transactions WHERE type='expense' AND category IN ('food', 'books', 'bus pass', 'bus passes', 'bus_passes', 'taxes', 'utilities') $and_child_filter")->fetchColumn() ?: 0;
 $other_expenses = $total_expense - $important_expenses;
 
 // Goals & Savings totals

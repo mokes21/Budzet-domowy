@@ -70,11 +70,14 @@ $transactions = $pdo->query("SELECT * FROM transactions WHERE 1=1 $child_filter 
             <div class="form-group">
                 <label>Category *</label>
                 <!-- Datalist allows free text but suggests these important ones -->
-                <input type="text" name="category" list="categories" class="form-control" required placeholder="e.g. food, books, bus passes">
+                <input type="text" name="category" list="categories" class="form-control" required placeholder="e.g. food, taxes, bus pass">
                 <datalist id="categories">
                     <option value="food">
+                    <option value="taxes">
+                    <option value="bus pass">
                     <option value="books">
-                    <option value="bus passes">
+                    <option value="clothes">
+                    <option value="utilities">
                     <option value="entertainment">
                     <option value="allowance">
                 </datalist>

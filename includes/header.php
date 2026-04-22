@@ -11,6 +11,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
 $page_title = ucfirst(str_replace('.php', '', $current_page));
 if ($page_title == 'Index') $page_title = 'Dashboard';
 
+function getCategoryBadgeClass($category, $type) {
+    if ($type === 'income') return 'income';
+    
+    $cat = strtolower(trim($category));
+    if ($cat === 'food') return 'cat-food';
+    if ($cat === 'taxes') return 'cat-taxes';
+    if (strpos($cat, 'bus') !== false) return 'cat-bus';
+    if ($cat === 'utilities') return 'cat-utilities';
+    if ($cat === 'books') return 'cat-important';
+    
+    return 'expense'; // default fallback
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
